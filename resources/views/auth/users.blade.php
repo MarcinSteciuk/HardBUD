@@ -11,7 +11,7 @@
                     <p>{{ $user->created_at }}</p>
                     @can('is-admin')
                         @if($user->id != Auth::User()->id)
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-equipment-modal-{{$user->id}}">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-room-modal-{{$user->id}}">
                                 Usuń
                             </button>
 
@@ -20,7 +20,7 @@
                                 @csrf
                                 @method("DELETE")
                                 @include('components.form-modal',
-                                         ['id' => "delete-equipment-modal-$user->id",
+                                         ['id' => "delete-room-modal-$user->id",
                                          'title' => 'Uwaga!',
                                          'body' => "Czy na pewno chcesz usunąć użytkownika: $user->name. Zmiany są nie odwracalne",
                                          'type' => 'danger',

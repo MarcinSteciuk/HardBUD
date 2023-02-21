@@ -3,11 +3,11 @@
 namespace App\Policies;
 
 use App\Models\Offer;
-use App\Models\equipment;
+use App\Models\room;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class equipmentPolicy
+class roomPolicy
 {
     use HandlesAuthorization;
 
@@ -26,10 +26,10 @@ class equipmentPolicy
      * Determine whether the user can view the model.
      *
      * @param User $user
-     * @param equipment $equipment
+     * @param room $room
      * @return bool
      */
-    public function view(User $user, equipment $equipment): bool
+    public function view(User $user, room $room): bool
     {
         return true;
     }
@@ -50,47 +50,47 @@ class equipmentPolicy
      * Determine whether the user can update the model.
      *
      * @param User $user
-     * @param equipment $equipment
+     * @param room $room
      * @return bool
      */
-    public function update(User $user, equipment $equipment): bool
+    public function update(User $user, room $room): bool
     {
-        return ($equipment->offer->user_id === $user->id) || $user->isAdmin();
+        return ($room->offer->user_id === $user->id) || $user->isAdmin();
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param User $user
-     * @param equipment $equipment
+     * @param room $room
      * @return bool
      */
-    public function delete(User $user, equipment $equipment): bool
+    public function delete(User $user, room $room): bool
     {
-        return ($equipment->offer->user_id === $user->id) || $user->isAdmin();
+        return ($room->offer->user_id === $user->id) || $user->isAdmin();
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param User $user
-     * @param equipment $equipment
+     * @param room $room
      * @return bool
      */
-    public function restore(User $user, equipment $equipment): bool
+    public function restore(User $user, room $room): bool
     {
-        return ($equipment->offer->user_id === $user->id) || $user->isAdmin();
+        return ($room->offer->user_id === $user->id) || $user->isAdmin();
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param User $user
-     * @param equipment $equipment
+     * @param room $room
      * @return bool
      */
-    public function forceDelete(User $user, equipment $equipment): bool
+    public function forceDelete(User $user, room $room): bool
     {
-        return ($equipment->offer->user_id === $user->id) || $user->isAdmin();
+        return ($room->offer->user_id === $user->id) || $user->isAdmin();
     }
 }

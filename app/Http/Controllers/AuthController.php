@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Offer;
 use App\Models\Reservation;
-use App\Models\equipment;
+use App\Models\room;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -104,11 +104,11 @@ class AuthController extends Controller
     {
         $user = User::findOrFail($user->id);
         foreach (Offer::where('user_id', '=', $user->id)->get() as $offer) {
-            foreach (equipment::where('offer_id', '=', $offer->id)->get() as $equipment) {
-                foreach (Reservation::where('equipment_id', '=', $equipment->id)->get() as $reservation) {
+            foreach (room::where('offer_id', '=', $offer->id)->get() as $room) {
+                foreach (Reservation::where('room_id', '=', $room->id)->get() as $reservation) {
                     $reservation->delete();
                 }
-                $equipment->delete();
+                $room->delete();
             }
             $offer->delete();
         }

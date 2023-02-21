@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offer;
-use App\Models\equipment;
-use App\Http\Requests\StoreequipmentRequest;
-use App\Http\Requests\UpdateequipmentRequest;
+use App\Models\room;
+use App\Http\Requests\StoreroomRequest;
+use App\Http\Requests\UpdateroomRequest;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
-class equipmentController extends Controller
+class roomController extends Controller
 {
 
     public function __construct()
     {
-        $this->authorizeResource(equipment::class, 'equipment');
+        $this->authorizeResource(room::class, 'room');
     }
 
     /**
@@ -43,45 +43,45 @@ class equipmentController extends Controller
     public function create(int $offerId): View
     {
         $offer = Offer::where('deleted', '<>', true)->findOrFail($offerId);
-        $this->authorize('create', [equipment::class, $offer]);
-        return view('equipments.create', ['offer' => $offer]);
+        $this->authorize('create', [room::class, $offer]);
+        return view('rooms.create', ['offer' => $offer]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreequipmentRequest $request
+     * @param StoreroomRequest $request
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function store(StoreequipmentRequest $request): RedirectResponse
+    public function store(StoreroomRequest $request): RedirectResponse
     {
         $offer = Offer::where('deleted', '<>', true)->findOrFail($request->offer_id);
-        $this->authorize('create', [equipment::class, $offer]);
+        $this->authorize('create', [room::class, $offer]);
         $requestData = $request->all();
-        $equipment = equipment::create($requestData);
-        return redirect()->route('offers.show', $equipment->offer_id);
+        $room = room::create($requestData);
+        return redirect()->route('offers.show', $room->offer_id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param equipment $equipment
+     * @param room $room
      * @return View
      * @throws AuthorizationException
      */
-    public function show(equipment $equipment): View
+    public function show(room $room): View
     {
-        $equipment = equipment::where('deleted', '<>', true)->findOrFail($equipment->id);
-        $disabledDates = $equipment->reservations->map(function ($reservation) {
+        $room = room::where('deleted', '<>', true)->findOrFail($room->id);
+        $disabledDates = $room->reservations->map(function ($reservation) {
             return [
                 'start' => $reservation->date_from,
                 'end' => $reservation->date_to,
             ];
         });
 
-        return view('equipments.show', [
-            'equipment' => $equipment,
+        return view('rooms.show', [
+            'room' => $room,
             'disabledDates' => $disabledDates
         ]);
     }
@@ -89,42 +89,42 @@ class equipmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param equipment $equipment
+     * @param room $room
      * @return View
      */
-    public function edit(equipment $equipment): View
+    public function edit(room $room): View
     {
-        $equipment = equipment::where('deleted', '<>', true)->findOrFail($equipment->id);
-        $offer = $equipment->offer;
-        return view('equipments.create', ['equipment' => $equipment, 'offer' => $offer]);
+        $room = room::where('deleted', '<>', true)->findOrFail($room->id);
+        $offer = $room->offer;
+        return view('rooms.create', ['room' => $room, 'offer' => $offer]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateequipmentRequest $request
-     * @param equipment $equipment
+     * @param UpdateroomRequest $request
+     * @param room $room
      * @return RedirectResponse
      */
-    public function update(UpdateequipmentRequest $request, equipment $equipment): RedirectResponse
+    public function update(UpdateroomRequest $request, room $room): RedirectResponse
     {
-        $equipment = equipment::where('deleted', '<>', true)->findOrFail($equipment->id);
+        $room = room::where('deleted', '<>', true)->findOrFail($room->id);
         $input = $request->all();
-        $equipment->update($input);
-        return redirect()->route('equipments.show', $equipment->id);
+        $room->update($input);
+        return redirect()->route('rooms.show', $room->id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param equipment $equipment
+     * @param room $room
      * @return RedirectResponse
      */
-    public function destroy(equipment $equipment): RedirectResponse
+    public function destroy(room $room): RedirectResponse
     {
-        $equipment = equipment::where('deleted', '<>', true)->findOrFail($equipment->id);
-        $equipment->deleted = true;
-        $equipment->save();
-        return redirect()->route('offers.show', $equipment->offer_id);
+        $room = room::where('deleted', '<>', true)->findOrFail($room->id);
+        $room->deleted = true;
+        $room->save();
+        return redirect()->route('offers.show', $room->offer_id);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
-use App\Models\equipment;
+use App\Models\room;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
@@ -40,19 +40,19 @@ class ReservationController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param int $equipmentId
+     * @param int $roomId
      * @return View
      */
-    public function create(int $equipmentId): View
+    public function create(int $roomId): View
     {
-        $equipment = equipment::where('deleted', '<>', true)->findOrFail($equipmentId);
-        $disabledDates = $equipment->reservations->map(function ($reservation) {
+        $room = room::where('deleted', '<>', true)->findOrFail($roomId);
+        $disabledDates = $room->reservations->map(function ($reservation) {
             return [
                 'start' => $reservation->date_from,
                 'end' => $reservation->date_to,
             ];
         });
-        return view("reservations.create", ["equipment" => $equipment, "offer" => $equipment->offer, "disabledDates" => $disabledDates]);
+        return view("reservations.create", ["room" => $room, "offer" => $room->offer, "disabledDates" => $disabledDates]);
     }
 
     /**
@@ -64,13 +64,13 @@ class ReservationController extends Controller
     public function store(StoreReservationRequest $request): RedirectResponse
     {
         $requestData = $request->all();
-        $equipment = equipment::where('deleted', '<>', true)->findOrFail($request->equipment_id);
+        $room = room::where('deleted', '<>', true)->findOrFail($request->room_id);
 
-        foreach ($equipment->reservations as $reservation)
+        foreach ($room->reservations as $reservation)
             if ($reservation->date_from <= $request->date_to and $request->date_from <= $reservation->date_to)
                 return redirect()->back()->withErrors(['date_from' => 'Pokój jest już zarezerwowany w tym terminie']);
 
-        $totalPrice = $equipment->price * Date::createFromFormat('Y-m-d', $request->date_to)->diffInDays(Date::createFromFormat('Y-m-d', $request->date_from));
+        $totalPrice = $room->price * Date::createFromFormat('Y-m-d', $request->date_to)->diffInDays(Date::createFromFormat('Y-m-d', $request->date_from));
 
         $requestData['user_id'] = Auth::id();
         $requestData['price'] = $totalPrice;
@@ -97,7 +97,7 @@ class ReservationController extends Controller
      */
     public function destroy(Reservation $reservation): RedirectResponse
     {
-        $reservation = equipment::findOrFail($reservation->id);
+        $reservation = room::findOrFail($reservation->id);
         $reservation->delete();
         return redirect()->route('reservations.index.show');
     }

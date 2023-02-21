@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Equipment;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamps();
             $table->date('date_from');
             $table->date('date_to');
+            $table->foreignIdFor(Room::class)->constrained();
             $table->foreignIdFor(User::class)->constrained();
             $table->decimal("price");
         });

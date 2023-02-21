@@ -8,7 +8,7 @@ use Nette\Utils\Random;
 /**
  * @extends Factory
  */
-class equipmentFactory extends Factory
+class roomFactory extends Factory
 {
     /**
      * Define the model's default state.

@@ -6,7 +6,7 @@ use App\Http\Requests\Filters\OfferFilterRequest;
 use App\Http\Requests\StoreOfferRequest;
 use App\Http\Requests\UpdateOfferRequest;
 use App\Models\Offer;
-use App\Models\equipment;
+use App\Models\room;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -141,9 +141,9 @@ class OfferController extends Controller
     public function destroy(Offer $offer): RedirectResponse
     {
         $offer = Offer::where('deleted', '<>', true)->findOrFail($offer->id);
-        foreach ($offer->equipments as $equipment) {
-            $equipment->deleted = true;
-            $equipment->save();
+        foreach ($offer->rooms as $room) {
+            $room->deleted = true;
+            $room->save();
         };
         $offer->deleted = true;
         $offer->save();

@@ -26,7 +26,7 @@ class StoreReservationRequest extends FormRequest
         return [
             'date_from' => 'required|date',
             'date_to' => 'required|date|after:date_from',
-            'equipment_id' => 'required|exists:equipments,id',
+            'room_id' => 'required|exists:rooms,id',
         ];
     }
 }

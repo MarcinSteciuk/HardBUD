@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Offer;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +20,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
+        Room::truncate();
         Offer::truncate();
         User::truncate();
         Schema::enableForeignKeyConstraints();
@@ -27,7 +29,7 @@ class UserSeeder extends Seeder
             [
                 [
                     'name' => 'Admin',
-                    'email' => 'admin@HardBUD.com',
+                    'email' => 'admin@sleepy.com',
                     'email_verified_at' => now(),
                     'password' => Hash::make('123'),
                     'remember_token' => Str::random(10),
@@ -35,7 +37,7 @@ class UserSeeder extends Seeder
                 ],
                 [
                     'name' => 'Oferty',
-                    'email' => 'oferty@HardBUD.com',
+                    'email' => 'oferty@sleepy.com',
                     'email_verified_at' => now(),
                     'password' => Hash::make('123'),
                     'remember_token' => Str::random(10),
@@ -43,7 +45,7 @@ class UserSeeder extends Seeder
                 ],
                 [
                     'name' => 'Rezerwacje',
-                    'email' => 'rezerwacje@HardBUD.com',
+                    'email' => 'rezerwacje@sleepy.com',
                     'email_verified_at' => now(),
                     'password' => Hash::make('123'),
                     'remember_token' => Str::random(10),

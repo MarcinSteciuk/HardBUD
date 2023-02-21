@@ -3,7 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\equipmentController;
+use App\Http\Controllers\roomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +23,7 @@ Route::resource('offers', OfferController::class);
 
 Route::controller(ReservationController::class)->group(function () {
     Route::get('/reservations', 'index')->name('reservations.index');
-    Route::get('/reservations/create/{equipmentId}', 'create')->name('reservations.create');
+    Route::get('/reservations/create/{roomId}', 'create')->name('reservations.create');
     Route::post('/reservations', 'store')->name('reservations.store');
     Route::get('/reservations/{reservation}', 'show')->name('reservations.show');
     Route::get('/reservations/{reservation}/edit', 'edit')->name('reservations.edit');
@@ -31,14 +31,14 @@ Route::controller(ReservationController::class)->group(function () {
     Route::delete('/reservations/{reservation}', 'destroy')->name('reservations.destroy');
 });
 
-Route::controller(equipmentController::class)->group(function () {
-    Route::get('/equipments', 'index')->name('equipments.index');
-    Route::get('/equipments/create/{offerId}', 'create')->name('equipments.create');
-    Route::post('/equipments', 'store')->name('equipments.store');
-    Route::get('/equipments/{equipment}', 'show')->name('equipments.show');
-    Route::get('/equipments/{equipment}/edit', 'edit')->name('equipments.edit');
-    Route::put('/equipments/{equipment}', 'update')->name('equipments.update');
-    Route::delete('/equipments/{equipment}', 'destroy')->name('equipments.destroy');
+Route::controller(roomController::class)->group(function () {
+    Route::get('/rooms', 'index')->name('rooms.index');
+    Route::get('/rooms/create/{offerId}', 'create')->name('rooms.create');
+    Route::post('/rooms', 'store')->name('rooms.store');
+    Route::get('/rooms/{room}', 'show')->name('rooms.show');
+    Route::get('/rooms/{room}/edit', 'edit')->name('rooms.edit');
+    Route::put('/rooms/{room}', 'update')->name('rooms.update');
+    Route::delete('/rooms/{room}', 'destroy')->name('rooms.destroy');
 });
 
 Route::controller(AuthController::class)->group(function () {

@@ -22,7 +22,7 @@ class ReservationFactory extends Factory
         return [
             'date_from' => $dateFrom,
             'date_to' => $dateTo,
-            'equipment_id' => rand(1, 500),
+            'room_id' => rand(1, 500),
             'user_id' => rand(1, 10),
         ];
     }

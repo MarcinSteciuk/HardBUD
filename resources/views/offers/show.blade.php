@@ -19,35 +19,35 @@
 
         <div class="d-flex flex-row align-items-center gap-3 mt-5">
             <h2>Liczba dostępnych egzemplarzy:</h2>
-            @can('create', [App\Models\equipment::class, $offer])
-                <a href="{{route("equipments.create", $offer->id)}}" class="bi bi-plus-square-fill" style="font-size: 20px"></a>
+            @can('create', [App\Models\room::class, $offer])
+                <a href="{{route("rooms.create", $offer->id)}}" class="bi bi-plus-square-fill" style="font-size: 20px"></a>
             @endcan
         </div>
         <div class="row mt-1">
-            @foreach ($offer->equipments as $equipment)
-                @if(!$equipment->deleted)
+            @foreach ($offer->rooms as $room)
+                @if(!$room->deleted)
                 <div class="col-md-4">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h5 class="card-title">{{$equipment->name}}</h5>
-                            <p class="card-text">{{$equipment->description}}</p>
-                            <p class="card-text">Cena: {{$equipment->price}}zł/doba</p>
-                            <a href="{{route('equipments.show', $equipment->id)}}" class="btn btn-info">Zobacz</a>
-                            @can('update', [$equipment])
-                                <a href="{{route('equipments.edit', $equipment->id)}}" class="btn btn-primary">Edytuj</a>
+                            <h5 class="card-title">{{$room->name}}</h5>
+                            <p class="card-text">{{$room->description}}</p>
+                            <p class="card-text">Cena: {{$room->price}}zł/doba</p>
+                            <a href="{{route('rooms.show', $room->id)}}" class="btn btn-info">Zobacz</a>
+                            @can('update', [$room])
+                                <a href="{{route('rooms.edit', $room->id)}}" class="btn btn-primary">Edytuj</a>
                             @endcan
-                            @can('delete', [$equipment])
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-equipment-modal-{{$equipment->id}}">
+                            @can('delete', [$room])
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-room-modal-{{$room->id}}">
                                     Usuń
                                 </button>
 
-                                <form method="POST" action="{{route('equipments.destroy', $equipment->id)}}">
+                                <form method="POST" action="{{route('rooms.destroy', $room->id)}}">
                                     @csrf
                                     @method("DELETE")
                                     @include('components.form-modal',
-                                             ['id' => "delete-equipment-modal-$equipment->id",
+                                             ['id' => "delete-room-modal-$room->id",
                                              'title' => 'Uwaga!',
-                                             'body' => "Czy na pewno chcesz usunąć pokój: $equipment->name. Zmiany są nie odwracalne",
+                                             'body' => "Czy na pewno chcesz usunąć pokój: $room->name. Zmiany są nie odwracalne",
                                              'type' => 'danger',
                                              'button' => 'Usuń'])
                                 </form>

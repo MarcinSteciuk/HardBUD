@@ -13,9 +13,9 @@ class Offer extends Model
 
     protected $fillable = ['name', 'description', 'place', 'image','accommodationType', 'user_id', 'deleted'];
 
-    public function equipments(): HasMany
+    public function rooms(): HasMany
     {
-        return $this->hasMany(equipment::class);
+        return $this->hasMany(room::class);
     }
 
     public function user()

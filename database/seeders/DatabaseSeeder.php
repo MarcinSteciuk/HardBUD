@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             UserSeeder::class,
             OfferSeeder::class,
-            equipmentSeeder::class,
             ReservationSeeder::class
         ]);
     }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Offer;
+use App\Models\Room;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -17,39 +18,25 @@ class OfferSeeder extends Seeder
     {
 
         Schema::disableForeignKeyConstraints();
+        Room::truncate();
         Offer::truncate();
         Schema::enableForeignKeyConstraints();
         Offer::upsert(
             [
                 [
-                    'name' => 'Betoniarka 100 litrów',
-                    'description' => 'Dane techniczne:
-
-                    Pojemność: 100 litrów
-                    Zasilanie: 230 V
-                ',
-                    'image' => '(1).jpg',
+                    'name' => 'BETONIARKA MIESZALNIK RIWALL PRO 220L 1500W 230V',
+                    'description' => 'ETONIARKA ŻELIWNA MODEL JS200 200l POJEMNOŚCI ZASYPOWEJ, 220L POJEMNOŚCI CAŁKOWITEJ. NAJMOCNIEJSZA - 1500W 230V MIESZALNIK PRO CZESKIEJ MARKI RIWALL',
+                    'image' => 'betoniarka.jpg',
                     'place' => "Kraków",
-                    'accommodationType' => 'osobisty',
+                    'picup' => 'Osobisty',
                     'user_id' => 2,
                 ],
                 [
-                    'name' => 'Gwoździarka',
-                    'description' => 'Dane techniczne:
-
-                    Zakres gwoździ: 50-90 mm
-                    Dł. gwoździ pierścieniowych: 50-70 mm
-                    Podłoże: drewno
-                    Wymiary [mm]: 367 x 372 x 108
-                    Typ pojemnika z gazem: GP1
-                    Waga: 3.4 kg
-                    Pojemność magazynku: 60 gwoździ
-                    Poziom hałasu: 94 dB
-                    Ilość mocowań na pojemniku gaz. :ok.1200 strzałów
-                ',
+                    'name' => 'Domek nad jeziorem',
+                    'description' => 'Niesamowity domek nad jeziorem. Super widok z każdego balkonu. Do okoła znajduje się wiele szlaków turystycznych oraz zabytków. Pełne wyposażenie.',
                     'image' => '(2).jpg',
                     'place' => "Zakopane",
-                    'accommodationType' => 'osobisty',
+                    'accommodationType' => 'Kwatera prywata',
                     'user_id' => 2,
                 ]
             ],
